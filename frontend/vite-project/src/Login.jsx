@@ -16,7 +16,7 @@ const Login = ({ setIsLoggedIn, isLoggedIn,setUserId }) => {
   const handleLoginRegister = async () => {
     try {
       if (isLogin) {
-        const response = await axios.post('/auth/login', { email, password });
+        const response = await axios.post('https://traveltipper.onrender.com/auth/login', { email, password });
         if (response.status === 200) {
           setIsLoggedIn(true);
           setCookie('authToken', response.data.token);
@@ -28,7 +28,7 @@ const Login = ({ setIsLoggedIn, isLoggedIn,setUserId }) => {
           nav('/');
         }
       } else {
-        const response = await axios.post('/auth/register', { username, email, password });
+        const response = await axios.post('https://traveltipper.onrender.com/auth/register', { username, email, password });
         if (response.status === 201) {
           console.log('Registration successful'); 
           setIsLogin(true);

@@ -18,7 +18,7 @@ useEffect(()=>{
 
     const fetchFriendUser = async () => {
         try {
-            const response = await axios.get(`/auth/users/friend/${friendId}`)
+            const response = await axios.get(`https://traveltipper.onrender.com/auth/users/friend/${friendId}`)
             console.log(response);
             setUser(response.data);
             console.log(response);
@@ -30,7 +30,7 @@ useEffect(()=>{
     const fetchUserExperiences = async () => {
         if (user) {
             try {
-                const experiencesResponse = await axios.get(`/api/travel/experiencesCreator/${user._id}`);
+                const experiencesResponse = await axios.get(`https://traveltipper.onrender.com/api/travel/experiencesCreator/${user._id}`);
                 console.log(experiencesResponse);
                 setUserExperiences(experiencesResponse.data);
             } catch (error) {
@@ -46,7 +46,7 @@ useEffect(()=>{
     }
     const sendFriendRequest = async () => {
         try {
-            await axios.post(`/auth/users/${user._id}/send-friend-request`);
+            await axios.post(`https://traveltipper.onrender.com/auth/users/${user._id}/send-friend-request`);
             setFriendRequestSent(true); 
             alert('friend request been sent successfully')
         } catch (error) {

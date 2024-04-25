@@ -18,7 +18,7 @@ const Home = ({ setExperienceId, averageRating, totalVotes }) => {
 
   const fetchRandomExperiences = async () => {
     try {
-      const response = await axios.get('/api/travel/all-experiences');
+      const response = await axios.get('https://traveltipper.onrender.com/api/travel/all-experiences');
       console.log(response);
       const shuffledExperiences = response.data.sort(() => 0.5 - Math.random());
       const selectedExperiences = shuffledExperiences.slice(0, 10);
@@ -30,7 +30,7 @@ const Home = ({ setExperienceId, averageRating, totalVotes }) => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`/api/travel/search-experiences`, {
+      const response = await axios.get(`https://traveltipper.onrender.com/api/travel/search-experiences`, {
         params: {
           location: searchLocation, 
         },

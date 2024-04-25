@@ -18,7 +18,7 @@ const DisplayFriends = ({setFriendId}) => {
 
     const fetchUser = async () => {
         try {
-            const response = await axios.get('/auth/userInfo');
+            const response = await axios.get('https://traveltipper.onrender.com/auth/userInfo');
             setUser(response.data);
         } catch (error) {
             console.log(error);
@@ -29,7 +29,7 @@ const DisplayFriends = ({setFriendId}) => {
         try {
             const friendData = await Promise.all(
                 friendIds.map(async (friendId) => {
-                    const response = await axios.get(`/auth/users/friend/${friendId}`);
+                    const response = await axios.get(`https://traveltipper.onrender.com/auth/users/friend/${friendId}`);
                     return response.data;
                 })
             );
@@ -40,7 +40,7 @@ const DisplayFriends = ({setFriendId}) => {
     };
     const removeFriend = async (friendId) => {
         try {
-            await axios.delete(`auth/users/friend/${friendId}`);
+            await axios.delete(`https://traveltipper.onrender.com/auth/users/friend/${friendId}`);
             setFriends((prevFriends) => prevFriends.filter((friend) => friend._id !== friendId));
         } catch (error) {
             console.log(error);

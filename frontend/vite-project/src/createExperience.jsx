@@ -34,7 +34,7 @@ const CreateExperience = () => {
         formData.append('photos', photos[i]);
       }
 
-      await axios.post('/api/travel/create', formData, {
+      await axios.post('https://traveltipper.onrender.com/api/travel/create', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
