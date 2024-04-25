@@ -58,7 +58,7 @@ const DisplayFriends = ({setFriendId}) => {
                 {friends.map((friend) => (
                     <Link to='/friendProfile' key={friend._id} onClick={()=>handleChoose(friend._id)}>
                     <div className="friend-card">
-                        <img src={`http://localhost:3001/${friend.profilePicture}`} alt={friend.username} className="friend-image" />
+                        <img src={`https://traveltipper.onrender.com/${friend.profilePicture}`} alt={friend.username} className="friend-image" />
                         <div className="friend-details">
                             <p className="friend-username">{friend.username}</p>
                             <button className='remove-button' onClick={(event)=>{event.preventDefault(); removeFriend(friend._id)}}>remove</button>

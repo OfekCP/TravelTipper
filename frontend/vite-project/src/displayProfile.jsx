@@ -86,7 +86,7 @@ const DisplayProfile = ({ experienceId, setExperienceId }) => {
                         </div>
                     ) : (
                         <div className="profile-picture-section">
-                            <img src={user && user.profilePicture ? `http://localhost:3001/${user.profilePicture}` : defaultProfilePicture} alt="Profile" className="profile-picture" />
+                            <img src={user && user.profilePicture ? `https://traveltipper.onrender.com/${user.profilePicture}` : defaultProfilePicture} alt="Profile" className="profile-picture" />
                         </div>
                     )}
                     {user && user.friendrequests && user.friendrequests.includes(getCookie('userId')) ? (

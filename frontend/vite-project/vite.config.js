@@ -6,8 +6,8 @@ export default {
   // other config options...
   server: {
     proxy: {
-      '/auth': 'http://localhost:3001',
-      '/api/travel': 'http://localhost:3001',
+      '/auth': 'https://traveltipper.onrender.com',
+      '/api/travel': 'https://traveltipper.onrender.com',
       
     },
   },

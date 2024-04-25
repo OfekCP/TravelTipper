@@ -295,7 +295,7 @@ const Profile = (setExperienceId) => {
             <ul>
               {friendRequests.map((request, index) => (
                 <li key={index}>
-                  <img src={`http://localhost:3001/${request.profilePicture}`} alt="" />
+                  <img src={`https://traveltipper.onrender.com/${request.profilePicture}`} alt="" />
                   <span className='request-note'>{request.username} wants to be your friend</span>
                   <button onClick={() => handleAcceptFriendRequest(request._id)} className="accept-button">Accept</button>
                   <button onClick={() => handleDeclineFriendRequest(request._id)} className="decline-button">Decline</button>
@@ -338,7 +338,7 @@ const Profile = (setExperienceId) => {
             </div>
           ) : (
             <div className="profile-picture-section">
-              <img src={user.profilePicture ? `http://localhost:3001/${user.profilePicture}` : defaultProfilePicture} alt="Profile" className="profile-picture" onClick={handleClick} />
+              <img src={user.profilePicture ? `https://traveltipper.onrender.com/${user.profilePicture}` : defaultProfilePicture} alt="Profile" className="profile-picture" onClick={handleClick} />
               {user.profilePicture && (
                 <button onClick={handleRemoveProfilePicture} className="remove-picture-button">Remove Profile Picture</button>
               )}

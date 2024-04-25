@@ -89,7 +89,7 @@ const Home = ({ setExperienceId, averageRating, totalVotes }) => {
       {searchResults.map(experience => (
         <Link key={experience._id} to={'/experience'} className="experience-link" onClick={() => handleChoose(experience._id)}>
           <div className="experience-item" style={{ marginBottom: '5vh' }}>
-            <img className='experience-image' src={`http://localhost:3001/${experience.photos[0].imageUrl}`} alt="" />
+            <img className='experience-image' src={`https://traveltipper.onrender.com/${experience.photos[0].imageUrl}`} alt="" />
             <h4 className='experienceLocation'>{experience.location}</h4>
             <p className='experienceCity'>{experience.city}</p>
             {experience.ratings.length > 0 && (
@@ -108,7 +108,7 @@ const Home = ({ setExperienceId, averageRating, totalVotes }) => {
         {randomExperiences.map(experience => (
           <Link key={experience._id} to={'/experience'} className="experience-link" onClick={() => handleChoose(experience._id)}>
             <div className="experience-item" style={{ marginBottom: '5vh' }}>
-              <img className='experience-image' src={`http://localhost:3001/${experience.photos[0].imageUrl}`} alt="" />
+              <img className='experience-image' src={`https://traveltipper.onrender.com/${experience.photos[0].imageUrl}`} alt="" />
               <h4 className='experienceLocation'>{experience.location}</h4>
               <p className='experienceCity'>{experience.city}</p>
               {experience.ratings.length > 0 ? (

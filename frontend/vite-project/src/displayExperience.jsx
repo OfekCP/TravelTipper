@@ -162,7 +162,7 @@ const DisplayExperience = ({ experienceId, isLoggedIn }) => {
             <div className="creator-info" onClick={handleDisplayProfile}>
                 {creator && (
                     <>
-                        <img src={`http://localhost:3001/${creator.profilePicture}`} alt="" />
+                        <img src={`https://traveltipper.onrender.com/${creator.profilePicture}`} alt="" />
                         <span className="creator-username">{creator.username}</span>
                     </>
                 )}
@@ -187,7 +187,7 @@ const DisplayExperience = ({ experienceId, isLoggedIn }) => {
                 <p className="written-account">{experience.writtenAccount}</p>
             </div>
             <div className="experience-photo-container">
-                <img src={`http://localhost:3001/${experience.photos[currentPhotoIndex].imageUrl}`} alt="" className="experience-image" />
+                <img src={`https://traveltipper.onrender.com/${experience.photos[currentPhotoIndex].imageUrl}`} alt="" className="experience-image" />
                 <div className="arrow-container">
                     <button className="prev-arrow" onClick={handlePrevPhoto}>{'<'}</button>
                     <button className="next-arrow" onClick={handleNextPhoto}>{'>'}</button>
