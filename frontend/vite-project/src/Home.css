@@ -1,0 +1,142 @@
+.home-container {
+  padding: 20px;
+}
+
+.logo {
+  font-family: Arial, sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #0077cc; 
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 10px;
+  border: 2px solid #0077cc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-input {
+  width: 50vw; 
+  height: 8vh;
+  padding: 1.5vh; 
+  font-size: 2vw; 
+  border: 0.2vw solid #ccc; 
+  border-radius: 0.5vw; 
+  box-sizing: border-box; 
+  margin-bottom: 2vh; 
+  position: relative;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+.search-container {
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  margin-bottom: 2vh; 
+}
+.random{
+  display: flex;
+  justify-content: center;
+}
+.search-button {
+  width: 30vw; 
+  height: 8vh; 
+  font-size: 2vw;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 0.5vw; 
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+  .search-input {
+    width: 80vw;
+    font-size: 3vw; 
+    border-radius: 2vw; 
+  }
+
+  .search-button {
+    width: 50vw;
+    font-size: 3vw; 
+    border-radius: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.no-results {
+  margin-top: 5vh;
+  color: #ff6347;
+}
+
+.search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.random-experiences {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+  gap: 20px; 
+}
+
+.experience-item {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease; 
+}
+
+.experience-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  transform: translateY(-5px); 
+}
+
+.experience-image {
+  width: 100%;
+  height: 200px; 
+  object-fit: cover;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.experience-details {
+  padding: 10px 0;
+}
+
+.experienceLocation {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.experienceCity {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.average-rating {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #ffc107;
+}
+
+.star {
+  margin-right: 5px;
+}
