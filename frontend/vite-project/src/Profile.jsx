@@ -38,7 +38,7 @@ const Profile = (setExperienceId) => {
 
   const fetchUser = async () => {
     try {
-      const response = await axios.get(`https://traveltipper.onrender.com/auth/userInfo`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/userInfo`);
       setUser(response.data);
       setBio(response.data.bio);
       setFormData({
@@ -52,7 +52,7 @@ const Profile = (setExperienceId) => {
   console.log(user);
   const fetchUserExperiences = async () => {
     try {
-      const experiencesResponse = await axios.get('https://traveltipper.onrender.com/api/travel/experiences');
+      const experiencesResponse = await axios.get(`${import.meta.env.VITE_API_URL}/api/travel/experiences`);
       console.log(experiencesResponse);
       setUserExperiences(experiencesResponse.data);
     } catch (error) {
@@ -62,7 +62,7 @@ const Profile = (setExperienceId) => {
 
   const fetchFriendRequests = async () => {
     try {
-      const response = await axios.get(`https://traveltipper.onrender.com/auth/users/friend-requests`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/users/friend-requests`);
       setFriendRequests(response.data);
       console.log(response.data);
     } catch (error) {
@@ -74,7 +74,7 @@ const Profile = (setExperienceId) => {
     const selectedFile = event.target.files[0];
     const formData = new FormData();
     formData.append('file', selectedFile);
-    const url = `https://traveltipper.onrender.com/auth/users/profile-picture`;
+    const url = `${import.meta.env.VITE_API_URL}/auth/users/profile-picture`;
 
     try {
       const response = await axios.post(url, formData, {
@@ -141,7 +141,7 @@ const Profile = (setExperienceId) => {
         updateData.password = formData.password;
       }
 
-      await axios.post('https://traveltipper.onrender.com/auth/user/update', updateData);
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/user/update`, updateData);
       setEditMode(false);
       setUser({
         ...user,
@@ -156,7 +156,7 @@ const Profile = (setExperienceId) => {
 
   const handleDelete = async (experienceId) => {
     try {
-      await axios.delete(`https://traveltipper.onrender.com/api/travel/experiences/${experienceId}`)
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/travel/experiences/${experienceId}`)
       fetchUserExperiences();
     } catch (error) {
       console.log(error);
@@ -177,7 +177,7 @@ const Profile = (setExperienceId) => {
         formData.append('photos', editData.photos[i]);
       }
 
-      await axios.put(`https://traveltipper.onrender.com/api/travel/experiences/${experienceId}`, formData);
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/travel/experiences/${experienceId}`, formData);
       setEditExperience(false);
 
       // Update the specific experience in userExperiences
@@ -223,7 +223,7 @@ const Profile = (setExperienceId) => {
   }
   const handleRemoveProfilePicture = async () => {
     try {
-      await axios.delete(`https://traveltipper.onrender.com/auth/users/profile-picture`);
+      await axios.delete(`${import.meta.env.VITE_API_URL}/auth/users/profile-picture`);
       setUser({ ...user, profilePicture: null });
     } catch (error) {
       console.error('Error removing profile picture:', error);
@@ -241,7 +241,7 @@ const Profile = (setExperienceId) => {
 
   const handleAcceptFriendRequest = async (senderId) => {
     try {
-      const response = await axios.post(`https://traveltipper.onrender.com/auth/users/${senderId}/accept-friend-request`);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/users/${senderId}/accept-friend-request`);
       console.log(response.data.message); 
       fetchFriendRequests();
       fetchUser();
@@ -253,7 +253,7 @@ const Profile = (setExperienceId) => {
 
   const handleDeclineFriendRequest = async (senderId) => {
     try {
-      const response = await axios.post(`https://traveltipper.onrender.com/auth/users/${senderId}/decline-friend-request`);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/users/${senderId}/decline-friend-request`);
       console.log(response.data.message); 
      fetchFriendRequests();
     } catch (error) {
@@ -266,11 +266,11 @@ const Profile = (setExperienceId) => {
   const handleSaveBio = async () => {
     try {
       if(editBio){
-        const response=await axios.put('https://traveltipper.onrender.com/auth/users/editBio',{bio:bio})
+        const response=await axios.put(`${import.meta.env.VITE_API_URL}/auth/users/editBio`,{bio:bio})
         setBio(response.data.bio)
         fetchUser();
       }
-      const response=await axios.post('https://traveltipper.onrender.com/auth/users/createBio',{bio:bio})
+      const response=await axios.post(`${import.meta.env.VITE_API_URL}/auth/users/createBio`,{bio:bio})
       setBio(response.data.bio)
       setEditBio(false);
       fetchUser();
@@ -295,7 +295,7 @@ const Profile = (setExperienceId) => {
             <ul>
               {friendRequests.map((request, index) => (
                 <li key={index}>
-                  <img src={`https://traveltipper.onrender.com/${request.profilePicture}`} alt="" />
+                  <img src={`${import.meta.env.VITE_API_URL}/${request.profilePicture}`} alt="" />
                   <span className='request-note'>{request.username} wants to be your friend</span>
                   <button onClick={() => handleAcceptFriendRequest(request._id)} className="accept-button">Accept</button>
                   <button onClick={() => handleDeclineFriendRequest(request._id)} className="decline-button">Decline</button>
@@ -338,7 +338,7 @@ const Profile = (setExperienceId) => {
             </div>
           ) : (
             <div className="profile-picture-section">
-              <img src={user.profilePicture ? `https://traveltipper.onrender.com/${user.profilePicture}` : defaultProfilePicture} alt="Profile" className="profile-picture" onClick={handleClick} />
+              <img src={user.profilePicture ? `${import.meta.env.VITE_API_URL}/${user.profilePicture}` : defaultProfilePicture} alt="Profile" className="profile-picture" onClick={handleClick} />
               {user.profilePicture && (
                 <button onClick={handleRemoveProfilePicture} className="remove-picture-button">Remove Profile Picture</button>
               )}

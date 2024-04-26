@@ -18,7 +18,7 @@ useEffect(()=>{
 
     const fetchFriendUser = async () => {
         try {
-            const response = await axios.get(`https://traveltipper.onrender.com/auth/users/friend/${friendId}`)
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/users/friend/${friendId}`)
             console.log(response);
             setUser(response.data);
             console.log(response);
@@ -30,7 +30,7 @@ useEffect(()=>{
     const fetchUserExperiences = async () => {
         if (user) {
             try {
-                const experiencesResponse = await axios.get(`https://traveltipper.onrender.com/api/travel/experiencesCreator/${user._id}`);
+                const experiencesResponse = await axios.get(`${import.meta.env.VITE_API_URL}/api/travel/experiencesCreator/${user._id}`);
                 console.log(experiencesResponse);
                 setUserExperiences(experiencesResponse.data);
             } catch (error) {
@@ -46,7 +46,7 @@ useEffect(()=>{
     }
     const sendFriendRequest = async () => {
         try {
-            await axios.post(`https://traveltipper.onrender.com/auth/users/${user._id}/send-friend-request`);
+            await axios.post(`${import.meta.env.VITE_API_URL}/auth/users/${user._id}/send-friend-request`);
             setFriendRequestSent(true); 
             alert('friend request been sent successfully')
         } catch (error) {
@@ -60,7 +60,7 @@ useEffect(()=>{
                     <h2 className="profile-heading">Profile</h2>
                     <p className="username">{user && user.username}</p>
                         <div className="profile-picture-section">
-                            <img src={user && user.profilePicture ? `https://traveltipper.onrender.com/${user.profilePicture}` : defaultProfilePicture} alt="Profile" className="profile-picture" />
+                            <img src={user && user.profilePicture ? `${import.meta.env.VITE_API_URL}/${user.profilePicture}` : defaultProfilePicture} alt="Profile" className="profile-picture" />
                         </div>
                     {user && user.friendrequests && user.friendrequests.includes(getCookie('userId')) ? (
                         <span>Friend request has already been sent</span>

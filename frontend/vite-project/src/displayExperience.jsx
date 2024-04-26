@@ -22,7 +22,7 @@ const DisplayExperience = ({ experienceId, isLoggedIn }) => {
     const nav = useNavigate();
     const fetchAllComments = async () => {
         try {
-            const response = await axios.get(`https://traveltipper.onrender.com/api/travel/experiences/${experienceId}/comments`)
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/travel/experiences/${experienceId}/comments`)
             setAllComments(response.data)
             console.log(response);
         } catch (error) {
@@ -38,7 +38,7 @@ const DisplayExperience = ({ experienceId, isLoggedIn }) => {
 
     const fetchRatings = async () => {
         try {
-            const response = await axios.get(`https://traveltipper.onrender.com/api/travel/experiences/${experienceId}/ratings`);
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/travel/experiences/${experienceId}/ratings`);
             const fetchedRatings = response.data;
             setRatings(fetchedRatings);
             const totalRating = fetchedRatings.reduce((acc, curr) => acc + curr.value, 0);
@@ -52,10 +52,10 @@ const DisplayExperience = ({ experienceId, isLoggedIn }) => {
 
     const fetchExperience = async () => {
         try {
-            const response = await axios.get(`https://traveltipper.onrender.com/api/travel/experiences/${experienceId}`);
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/travel/experiences/${experienceId}`);
             setExperience(response.data);
             console.log(response.data);
-            const creatorResponse = await axios.get(`https://traveltipper.onrender.com/auth/experience/creator/${experienceId}`);
+            const creatorResponse = await axios.get(`${import.meta.env.VITE_API_URL}/auth/experience/creator/${experienceId}`);
             console.log(creatorResponse);
             setCreator(creatorResponse.data)
         } catch (error) {
@@ -93,9 +93,9 @@ const DisplayExperience = ({ experienceId, isLoggedIn }) => {
         } else {
             try {
                 if (editMode) {
-                    await axios.put(`https://traveltipper.onrender.com/api/travel/comments/${experienceId}/${editingCommentId}`, { content: commentText });
+                    await axios.put(`${import.meta.env.VITE_API_URL}/api/travel/comments/${experienceId}/${editingCommentId}`, { content: commentText });
                 } else {
-                    await axios.post(`https://traveltipper.onrender.com/api/travel/experiences/${experienceId}/comments`, { content: commentText });
+                    await axios.post(`${import.meta.env.VITE_API_URL}/api/travel/experiences/${experienceId}/comments`, { content: commentText });
                 }
                 setEditMode(false); 
                 setEditingCommentId(null); 
@@ -139,7 +139,7 @@ const DisplayExperience = ({ experienceId, isLoggedIn }) => {
     };
     const handleDeleteComment = async (commentId) => {
         try {
-            await axios.delete(`https://traveltipper.onrender.com/api/travel/comments/${experienceId}/${commentId}`)
+            await axios.delete(`${import.meta.env.VITE_API_URL}/api/travel/comments/${experienceId}/${commentId}`)
             fetchAllComments();
         } catch (error) {
             console.log(error);
@@ -150,7 +150,7 @@ const DisplayExperience = ({ experienceId, isLoggedIn }) => {
             nav('/login')
         } else {
             try {
-                await axios.post(`https://traveltipper.onrender.com/api/travel/experiences/${experienceId}/ratings`, { value });
+                await axios.post(`${import.meta.env.VITE_API_URL}/api/travel/experiences/${experienceId}/ratings`, { value });
                 fetchRatings();
             } catch (error) {
                 console.log(error);
@@ -162,7 +162,7 @@ const DisplayExperience = ({ experienceId, isLoggedIn }) => {
             <div className="creator-info" onClick={handleDisplayProfile}>
                 {creator && (
                     <>
-                        <img src={`https://traveltipper.onrender.com/${creator.profilePicture}`} alt="" />
+                        <img src={`${import.meta.env.VITE_API_URL}/${creator.profilePicture}`} alt="" />
                         <span className="creator-username">{creator.username}</span>
                     </>
                 )}
@@ -187,7 +187,7 @@ const DisplayExperience = ({ experienceId, isLoggedIn }) => {
                 <p className="written-account">{experience.writtenAccount}</p>
             </div>
             <div className="experience-photo-container">
-                <img src={`https://traveltipper.onrender.com/${experience.photos[currentPhotoIndex].imageUrl}`} alt="" className="experience-image" />
+                <img src={`${import.meta.env.VITE_API_URL}/${experience.photos[currentPhotoIndex].imageUrl}`} alt="" className="experience-image" />
                 <div className="arrow-container">
                     <button className="prev-arrow" onClick={handlePrevPhoto}>{'<'}</button>
                     <button className="next-arrow" onClick={handleNextPhoto}>{'>'}</button>
