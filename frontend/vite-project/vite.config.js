@@ -6,8 +6,8 @@ export default {
   // other config options...
   server: {
     proxy: {
-      '/auth': `${import.meta.env.VITE_API_URL}`,
-      '/api/travel':  `${import.meta.env.VITE_API_URL}`,
+      '/auth': 'http://localhost:3001',
+      '/api/travel': 'http://localhost:3001',
       
     },
   },

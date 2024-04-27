@@ -18,7 +18,7 @@ const DisplayFriends = ({setFriendId}) => {
 
     const fetchUser = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/userInfo`);
+            const response = await axios.get('/auth/userInfo');
             setUser(response.data);
         } catch (error) {
             console.log(error);
@@ -29,7 +29,7 @@ const DisplayFriends = ({setFriendId}) => {
         try {
             const friendData = await Promise.all(
                 friendIds.map(async (friendId) => {
-                    const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/users/friend/${friendId}`);
+                    const response = await axios.get(`/auth/users/friend/${friendId}`);
                     return response.data;
                 })
             );
@@ -40,7 +40,7 @@ const DisplayFriends = ({setFriendId}) => {
     };
     const removeFriend = async (friendId) => {
         try {
-            await axios.delete(`${import.meta.env.VITE_API_URL}/auth/users/friend/${friendId}`);
+            await axios.delete(`auth/users/friend/${friendId}`);
             setFriends((prevFriends) => prevFriends.filter((friend) => friend._id !== friendId));
         } catch (error) {
             console.log(error);
@@ -58,7 +58,7 @@ const DisplayFriends = ({setFriendId}) => {
                 {friends.map((friend) => (
                     <Link to='/friendProfile' key={friend._id} onClick={()=>handleChoose(friend._id)}>
                     <div className="friend-card">
-                        <img src={`${import.meta.env.VITE_API_URL}/${friend.profilePicture}`} alt={friend.username} className="friend-image" />
+                        <img src={`http://localhost:3001/${friend.profilePicture}`} alt={friend.username} className="friend-image" />
                         <div className="friend-details">
                             <p className="friend-username">{friend.username}</p>
                             <button className='remove-button' onClick={(event)=>{event.preventDefault(); removeFriend(friend._id)}}>remove</button>

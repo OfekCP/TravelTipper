@@ -18,7 +18,7 @@ const Home = ({ setExperienceId, averageRating, totalVotes }) => {
 
   const fetchRandomExperiences = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/travel/all-experiences`);
+      const response = await axios.get('/api/travel/all-experiences');
       console.log(response);
       const shuffledExperiences = response.data.sort(() => 0.5 - Math.random());
       const selectedExperiences = shuffledExperiences.slice(0, 10);
@@ -30,7 +30,7 @@ const Home = ({ setExperienceId, averageRating, totalVotes }) => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/travel/search-experiences`, {
+      const response = await axios.get(`/api/travel/search-experiences`, {
         params: {
           location: searchLocation, 
         },
@@ -89,7 +89,7 @@ const Home = ({ setExperienceId, averageRating, totalVotes }) => {
       {searchResults.map(experience => (
         <Link key={experience._id} to={'/experience'} className="experience-link" onClick={() => handleChoose(experience._id)}>
           <div className="experience-item" style={{ marginBottom: '5vh' }}>
-            <img className='experience-image' src={`${import.meta.env.VITE_API_URL}/${experience.photos[0].imageUrl}`} alt="" />
+            <img className='experience-image' src={`http://localhost:3001/${experience.photos[0].imageUrl}`} alt="" />
             <h4 className='experienceLocation'>{experience.location}</h4>
             <p className='experienceCity'>{experience.city}</p>
             {experience.ratings.length > 0 && (
@@ -108,7 +108,7 @@ const Home = ({ setExperienceId, averageRating, totalVotes }) => {
         {randomExperiences.map(experience => (
           <Link key={experience._id} to={'/experience'} className="experience-link" onClick={() => handleChoose(experience._id)}>
             <div className="experience-item" style={{ marginBottom: '5vh' }}>
-              <img className='experience-image' src={`${import.meta.env.VITE_API_URL}/${experience.photos[0].imageUrl}`} alt="" />
+              <img className='experience-image' src={`http://localhost:3001/${experience.photos[0].imageUrl}`} alt="" />
               <h4 className='experienceLocation'>{experience.location}</h4>
               <p className='experienceCity'>{experience.city}</p>
               {experience.ratings.length > 0 ? (

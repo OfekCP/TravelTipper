@@ -7,6 +7,7 @@ const defaultProfilePicture = '.\src\assets\blank-profile-picture-973460_960_720
 const DisplayProfile = ({ experienceId, setExperienceId }) => {
     const [user, setUser] = useState(null);
     const [editMode, setEditMode] = useState(false);
+    const [editExperience, setEditExperience] = useState(false)
     const [userExperiences, setUserExperiences] = useState([]);
     const [friendRequestSent, setFriendRequestSent] = useState(false);
 
@@ -19,7 +20,7 @@ const DisplayProfile = ({ experienceId, setExperienceId }) => {
     }, [user])
     const fetchCreatorUser = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_API_URL}/auth/experience/creatorDisplay/${experienceId}`);
+            const response = await axios.get(`/auth/experience/creatorDisplay/${experienceId}`);
             console.log(response);
             setUser(response.data);
             console.log(response);
@@ -31,7 +32,7 @@ const DisplayProfile = ({ experienceId, setExperienceId }) => {
     const fetchUserExperiences = async () => {
         if (user) {
             try {
-                const experiencesResponse = await axios.get(`${import.meta.env.VITE_API_URL}/api/travel/experiencesCreator/${user._id}`);
+                const experiencesResponse = await axios.get(`/api/travel/experiencesCreator/${user._id}`);
                 console.log(experiencesResponse);
                 setUserExperiences(experiencesResponse.data);
             } catch (error) {
@@ -47,7 +48,7 @@ const DisplayProfile = ({ experienceId, setExperienceId }) => {
     }
     const sendFriendRequest = async () => {
         try {
-            await axios.post(`${import.meta.env.VITE_API_URL}/auth/users/${user._id}/send-friend-request`);
+            await axios.post(`/auth/users/${user._id}/send-friend-request`);
             setFriendRequestSent(true);
             alert('friend request been sent successfully')
         } catch (error) {
@@ -86,7 +87,7 @@ const DisplayProfile = ({ experienceId, setExperienceId }) => {
                         </div>
                     ) : (
                         <div className="profile-picture-section">
-                            <img src={user && user.profilePicture ? `${import.meta.env.VITE_API_URL}/${user.profilePicture}` : defaultProfilePicture} alt="Profile" className="profile-picture" />
+                            <img src={user && user.profilePicture ? `http://localhost:3001/${user.profilePicture}` : defaultProfilePicture} alt="Profile" className="profile-picture" />
                         </div>
                     )}
                     {user && user.friendrequests && user.friendrequests.includes(getCookie('userId')) ? (

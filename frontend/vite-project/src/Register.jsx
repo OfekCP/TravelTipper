@@ -8,7 +8,7 @@ const Register = ({ setToken }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, { username, email, password });
+    const response = await axios.post('/auth/register', { username, email, password });
     setToken(response.data.token);
   };
 
