@@ -1,9 +1,7 @@
-// App.js
 import React, { useState,useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import NavBar from './NavBar';
 import Login from './Login';
-// import Register from './Register';
 import Profile from './Profile';
 import Home from './Home';
 import axios from 'axios';

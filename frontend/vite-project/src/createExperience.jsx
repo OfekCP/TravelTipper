@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import countryList from './countries.json'; // Import the JSON file
-import './create.css'; // Import the CSS file
+import countryList from './countries.json'; 
+import './create.css'; 
 
 const CreateExperience = () => {
   const [location, setLocation] = useState('');
@@ -14,7 +14,6 @@ const CreateExperience = () => {
 
   const handleImageChange = (e) => {
     const files = e.target.files;
-    // Concatenate the newly selected files with the existing ones
     const newPhotos = Array.from(files);
     setPhotos((prevPhotos) => [...prevPhotos, ...newPhotos]);
   };
@@ -29,7 +28,6 @@ const CreateExperience = () => {
       formData.append('endDate', endDate);
       formData.append('writtenAccount', writtenAccount);
 
-      // Append each file to the FormData object
       for (let i = 0; i < photos.length; i++) {
         formData.append('photos', photos[i]);
       }
@@ -40,7 +38,6 @@ const CreateExperience = () => {
         },
       });
 
-      // Clear form fields after successful submission
       setLocation('');
       setCity('');
       setStartDate('');
@@ -48,7 +45,6 @@ const CreateExperience = () => {
       setWrittenAccount('');
       setPhotos([]);
 
-      // Redirect or show success message
     } catch (error) {
       console.error(error);
       setError('An error occurred while submitting the form. Please try again.');

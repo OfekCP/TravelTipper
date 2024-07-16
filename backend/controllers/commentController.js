@@ -97,15 +97,15 @@ exports.updateComment = async (req, res) => {
         return res.status(404).json({ message: 'Travel experience not found' });
       }
   
-      // Find the comment by its ID
+
       const comment = experience.comments.id(commentId);
       if (!comment) {
         return res.status(404).json({ message: 'Comment not found' });
       }
-      // Remove the comment from the array
+     
       experience.comments.pull(comment);
   
-      // Save the updated experience document
+   
       await experience.save();
   
       res.status(200).json({ message: 'Comment deleted successfully' });

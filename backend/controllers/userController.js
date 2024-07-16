@@ -1,16 +1,15 @@
-// controllers/authController.js
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/LoginModel');
 const TravelExperience=require('../models/TravelModel')
 const generateToken = (userId) => {
-  // Create a payload containing the user ID
+
   const payload = {
     userId: userId
   };
 
-  // Sign the payload with your secret key and set the expiration time
-  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '5h' }); // Change the expiration time as needed
+
+  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '5h' });
 
   return token;
 };
@@ -50,19 +49,15 @@ const login = async (req, res) => {
 };
 
 const createOrUpdateBio = async (req, res) => {
-  const userId = req.user.id; // Assuming user id is extracted from the request
+  const userId = req.user.id; 
   
   try {
-    // Find the user by id
+  
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    // Extract bio from request body
     const { bio } = req.body;
-
-    // Update user bio
     user.bio = bio;
     await user.save();
 
@@ -75,7 +70,6 @@ const createOrUpdateBio = async (req, res) => {
 
 const logout = (req, res) => {
     try {
-      // Clear the authentication token cookie
       res.clearCookie('token');
       res.status(200).json({ message: 'Logout successful' });
     } catch (error) {
@@ -128,7 +122,7 @@ const uploadProfilePicture = async (req, res) => {
       return res.status(404).send('User not found');
     }
     
-    user.profilePicture = req.file.path; // Save the path to the profile picture
+    user.profilePicture = req.file.path; 
     await user.save();
     
     res.send(user);
@@ -138,7 +132,7 @@ const uploadProfilePicture = async (req, res) => {
   }
 };
 
-// userController.js
+
 const fs = require('fs');
 
 const deleteProfilePicture = async (req, res) => {
@@ -148,11 +142,10 @@ const deleteProfilePicture = async (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    // Check if user has a profile picture
+    
     if (user.profilePicture) {
-      // Remove the profile picture file from the server
+      
       fs.unlinkSync(user.profilePicture);
-      // Update the user's profile picture field in the database to null
       user.profilePicture = null;
       await user.save();
     }
@@ -168,10 +161,7 @@ const updateUserById = async (req, res) => {
   try {
     const userId = req.user.id;
     const updates = req.body;
-
-    // Check if the updates contain a password field
     if (updates.password) {
-      // Hash the password before updating the user
       const hashedPassword = await bcrypt.hash(updates.password, 10);
       updates.password = hashedPassword;
     }
@@ -191,27 +181,24 @@ const updateUserById = async (req, res) => {
 const getExperienceById = async (req, res) => {
   try {
       const experienceId = req.params.id;
-      // Fetch the experience data
       const experience = await TravelExperience.findById(experienceId);
       
       if (!experience) {
           return res.status(404).json({ message: 'Travel experience not found' });
       }
-      
-      // Fetch the creator's information using the createdBy field
+    
       const creator = await User.findById(experience.createdBy);
       if (!creator) {
-          // If creator is not found, set default values or handle as needed
           experience.creator = {
               username: 'Unknown',
               profilePicture: 'default-profile-picture.jpg'
           };
       } else {
-          // If creator is found, include the creator's information
+          
           experience.creator = {
               username: creator.username,
               profilePicture: creator.profilePicture ,
-              id:creator._id// Assuming you have a profilePicture field in your User model
+              id:creator._id
           };
       }
 
@@ -225,14 +212,12 @@ const getExperienceById = async (req, res) => {
 const creatorProfile=async(req,res)=>{
   try {
     const experienceId = req.params.id;
-    // Fetch the experience data
     const experience = await TravelExperience.findById(experienceId);
     
     if (!experience) {
         return res.status(404).json({ message: 'Travel experience not found' });
     }
     
-    // Fetch the creator's information using the createdBy field
     const creator = await User.findById(experience.createdBy);
     if (!creator) {
       return res.status(404).json({ message: 'user not found' });
@@ -243,21 +228,17 @@ const creatorProfile=async(req,res)=>{
     res.status(500).json({ message: 'Internal Server Error' });
 }
 };
-  // userController.js
 
-// Send Friend Request
+
 const sendFriendRequest = async (req, res) => {
   try {
-    const senderId = req.user.id; // ID of the user sending the request
-    const recipientId = req.params.recipientId; // ID of the recipient user
-
-    // Check if the recipient user exists
+    const senderId = req.user.id; 
+    const recipientId = req.params.recipientId; 
     const recipient = await User.findById(recipientId);
     if (!recipient) {
       return res.status(404).json({ message: 'Recipient user not found' });
     }
 
-    // Add senderId to recipient's friend requests array
     recipient.friendRequests.push(senderId);
     await recipient.save();
 
@@ -268,12 +249,11 @@ const sendFriendRequest = async (req, res) => {
   }
 };
 
-// Get All Friend Requests
 const getAllFriendRequests = async (req, res) => {
   try {
-    const userId = req.user.id; // ID of the user
+    const userId = req.user.id;
 
-    // Fetch the user's friend requests
+    
     const user = await User.findById(userId).populate('friendRequests');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -287,26 +267,20 @@ const getAllFriendRequests = async (req, res) => {
   }
 };
 
-// Accept Friend Request
+
 const acceptFriendRequest = async (req, res) => {
   try {
-    const userId = req.user.id; // ID of the user
-    const senderId = req.params.senderId; // ID of the sender user
-
-    // Find the user and the sender in the database
+    const userId = req.user.id; 
+    const senderId = req.params.senderId; 
     const user = await User.findById(userId);
     const sender = await User.findById(senderId);
     if (!user || !sender) {
       return res.status(404).json({ message: 'User or sender not found' });
     }
-
-    // Add senderId to user's friends array
     user.friends.push(senderId);
     await user.save();
     sender.friends.push(userId)
     await sender.save();
-
-    // Remove senderId from user's friend requests array
     user.friendRequests.pull(senderId);
     await user.save();
 
@@ -319,17 +293,13 @@ const acceptFriendRequest = async (req, res) => {
 
 const declineFriendRequest = async (req, res) => {
   try {
-    const userId = req.user.id; // ID of the user
-    const senderId = req.params.senderId; // ID of the sender user
-
-    // Find the user and the sender in the database
+    const userId = req.user.id; 
+    const senderId = req.params.senderId; 
     const user = await User.findById(userId);
     const sender = await User.findById(senderId);
     if (!user || !sender) {
       return res.status(404).json({ message: 'User or sender not found' });
     }
-
-    // Remove senderId from user's friend requests array
     user.friendRequests.pull(senderId);
     await user.save();
 

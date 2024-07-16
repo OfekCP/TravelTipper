@@ -1,45 +1,42 @@
 const TravelExperience = require('../models/TravelModel');
 const multer = require('multer');
 
-// Configure Multer storage
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Destination folder for uploaded files
+    cb(null, 'uploads/'); 
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname); // Generate unique filenames
+    cb(null, Date.now() + '-' + file.originalname); 
   }
 });
 
-// Initialize Multer with the configured storage
-const upload = multer({ storage: storage }).array('photos'); // 'photos' is the name attribute of the file input in your form
+
+const upload = multer({ storage: storage }).array('photos'); 
 
 exports.createExperience = async (req, res) => {
   try {
     upload(req, res, async function (err) {
 
       if (err instanceof multer.MulterError) {
-        // A Multer error occurred when uploading.
+       
         console.error(err);
         return res.status(500).json({ message: 'File upload error' });
       } else if (err) {
-        // An unknown error occurred when uploading.
         console.error(err);
         return res.status(500).json({ message: 'Unknown error occurred' });
       }
       
-      // If no error occurred, continue processing form data
       try {
         const userId = req.user.id;
         const { location,city, startDate, endDate, writtenAccount } = req.body;
-        // Verify if startDate and endDate are provided
+
         if (!startDate || !endDate) {
           return res.status(400).json({ message: 'Both start date and end date are required' });
         }
 
         const photos = req.files.map(file => ({ imageUrl: file.path }));
 
-        // Save other form data and file paths in your database
         const newExperience = new TravelExperience({
           userId,
           location,
@@ -104,7 +101,6 @@ exports.viewSingleExperience = async (req, res) => {
   };
 exports.updateExperience = async (req, res) => {
   try {
-    // Handle file upload
     upload(req, res, async function (err) {
       if (err instanceof multer.MulterError) {
         console.error(err);
@@ -114,30 +110,29 @@ exports.updateExperience = async (req, res) => {
         return res.status(500).json({ message: 'Unknown error occurred' });
       }
 
-      // Check if files were uploaded
       if (!req.files || req.files.length === 0) {
         return res.status(400).json({ message: 'No files were uploaded' });
       }
       
-      // Extract form data
+   
       const experienceId = req.params.id;
       const { location, startDate, endDate, writtenAccount } = req.body;
       const photos = req.files.map(file => ({ imageUrl: file.path }));
 
-      // Find the experience by ID
+     
       const experience = await TravelExperience.findById(experienceId);
       if (!experience) {
         return res.status(404).json({ message: 'Travel experience not found' });
       }
       
-      // Update experience fields
+    
       experience.location = location;
       experience.startDate = startDate;
       experience.endDate = endDate;
       experience.writtenAccount = writtenAccount;
       experience.photos = photos;
 
-      // Save the updated experience
+     
       await experience.save();
       
       res.status(200).json({ message: 'Travel experience updated successfully' });
@@ -199,7 +194,7 @@ exports.deleteExperience = async (req, res) => {
 exports.addComment = async (req, res) => {
     try {
       const { content } = req.body;
-      const userId = req.session.user.id; // Assuming user is authenticated
+      const userId = req.session.user.id; 
   
       const newComment = { content, user: userId };
       const experienceId = req.params.experienceId;
@@ -218,5 +213,5 @@ exports.addComment = async (req, res) => {
       res.status(500).json({ message: 'Internal Server Error' });
     }
   };
-// Modify the endpoint to include creator's information
+
 

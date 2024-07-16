@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-// Define a new schema for storing images as files
 const imageSchema = new mongoose.Schema({
   imageUrl: { type: String, default: '' }
 });
@@ -41,7 +40,7 @@ const travelExperienceSchema = new mongoose.Schema({
     type: Date,
     required: true,
     },
-  photos: [imageSchema], // Use the image schema for storing photos
+  photos: [imageSchema], 
   writtenAccount: {
     type: String,
     required: true,

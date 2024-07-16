@@ -11,16 +11,16 @@ exports.createRating = async (req, res) => {
         return res.status(404).json({ message: 'Travel experience not found' });
       }
   
-      // Check if the user has already rated the experience
+      
       const existingRating = experience.ratings.find(rating => rating.user.toString() === userId);
       if (existingRating) {
-        // Update the existing rating with the new value
+        
         existingRating.value = value;
         await experience.save();
         return res.status(200).json({ message: 'Rating updated successfully' });
       }
   
-      // If the user hasn't already rated the experience, create a new rating
+      
       experience.ratings.push({ user: userId, value });
       await experience.save();
   
@@ -75,22 +75,22 @@ exports.removeRating = async (req, res) => {
       const userId = req.session.user.id;
       const experienceId = req.params.experienceId;
   
-      // Find the experience
+      
       const experience = await TravelExperience.findById(experienceId);
       if (!experience) {
         return res.status(404).json({ message: 'Travel experience not found' });
       }
   
-      // Check if the user has already rated the experience
+      
       const ratingIndex = experience.ratings.findIndex(rating => rating.user.toString() === userId);
       if (ratingIndex === -1) {
         return res.status(404).json({ message: 'User has not rated this experience' });
       }
   
-      // Remove the user's rating
+      
       experience.ratings.splice(ratingIndex, 1);
   
-      // Save the updated experience document
+      
       await experience.save();
   
       res.status(200).json({ message: 'Rating removed successfully' });

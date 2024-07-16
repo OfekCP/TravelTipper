@@ -1,4 +1,3 @@
-// models/User.js
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -12,8 +11,6 @@ const userSchema = new mongoose.Schema({
   friendRequests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Users' }]
 
 });
-
-// ... existing pre-save hook and exports
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
